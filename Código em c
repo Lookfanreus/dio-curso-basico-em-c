@@ -1,0 +1,146 @@
+#include <stdio.h>
+
+#define SIZE 3
+
+void printBoard(char board[SIZE][SIZE]) {
+    printf("  0 1 2\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d ", i);
+        for (int j = 0; j < SIZE; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int checkWinner(char board[SIZE][SIZE], char player) {
+    // Check rows and columns
+    for (int i = 0; i < SIZE; i++) {
+        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
+            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+            return 1;
+        }
+    }
+    // Check diagonals
+    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+    char board[SIZE][SIZE] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}};
+    int row, col;
+    char player = 'X';
+    int moves = 0;
+
+    while (1) {
+        printBoard(board);
+        printf("Player %c, enter row and column: ", player);
+        scanf("%d %d", &row, &col);
+
+        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || board[row][col] != ' ') {
+            printf("Invalid move. Try again.\n");
+            continue;
+        }
+
+        board[row][col] = player;
+        moves++;
+
+        if (checkWinner(board, player)) {
+            printBoard(board);
+            printf("Player %c wins!\n", player);
+            break;
+        }
+
+        if (moves == SIZE * SIZE) {
+            printBoard(board);
+            printf("It's a draw!\n");
+            break;
+        }
+
+        player = (player == 'X') ? 'O' : 'X';
+    }
+
+    return 0;
+}
+ Public code references from 11 repositories
+Esse código implementa um jogo da velha simples em C. Copie e cole em um arquivo .c e compile usando um compilador C de sua preferência.
+
+colocar os comentarios
+Aqui está o código do jogo da velha em C com comentários:
+
+C
+#include <stdio.h>
+
+#define SIZE 3
+
+// Função para imprimir o tabuleiro
+void printBoard(char board[SIZE][SIZE]) {
+    printf("  0 1 2\n");
+    for (int i = 0; i < SIZE; i++) {
+        printf("%d ", i);
+        for (int j = 0; j < SIZE; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Função para verificar se há um vencedor
+int checkWinner(char board[SIZE][SIZE], char player) {
+    // Verificar linhas e colunas
+    for (int i = 0; i < SIZE; i++) {
+        if ((board[i][0] == player && board[i][1] == player && board[i][2] == player) ||
+            (board[0][i] == player && board[1][i] == player && board[2][i] == player)) {
+            return 1;
+        }
+    }
+    // Verificar diagonais
+    if ((board[0][0] == player && board[1][1] == player && board[2][2] == player) ||
+        (board[0][2] == player && board[1][1] == player && board[2][0] == player)) {
+        return 1;
+    }
+    return 0;
+}
+
+int main() {
+    char board[SIZE][SIZE] = {{' ', ' ', ' '}, {' ', ' ', ' '}, {' ', ' ', ' '}}; // Inicializar o tabuleiro
+    int row, col;
+    char player = 'X'; // Começar com o jogador 'X'
+    int moves = 0; // Contador de jogadas
+
+    while (1) {
+        printBoard(board); // Imprimir o tabuleiro
+        printf("Player %c, enter row and column: ", player);
+        scanf("%d %d", &row, &col);
+
+        // Verificar se a jogada é válida
+        if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || board[row][col] != ' ') {
+            printf("Invalid move. Try again.\n");
+            continue;
+        }
+
+        board[row][col] = player; // Marcar a jogada no tabuleiro
+        moves++;
+
+        // Verificar se o jogador atual venceu
+        if (checkWinner(board, player)) {
+            printBoard(board);
+            printf("Player %c wins!\n", player);
+            break;
+        }
+
+        // Verificar se houve empate
+        if (moves == SIZE * SIZE) {
+            printBoard(board);
+            printf("It's a draw!\n");
+            break;
+        }
+
+        // Alternar entre os jogadores
+        player = (player == 'X') ? 'O' : 'X';
+    }
+
+    return 0;
